@@ -12,6 +12,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score,
@@ -179,6 +180,21 @@ rf_model, rf_cm = train_and_eval(
     "Random Forest"
 )
 plot_cm(rf_cm, "Random Forest CM")
+
+# Multi-Layer Perceptron
+mlp_model, mlp_cm = train_and_eval(
+    MLPClassifier(
+        hidden_layer_sizes=(128, 64),
+        activation="relu",
+        solver="adam",
+        learning_rate="adaptive",
+        max_iter=200,
+        random_state=RANDOM_STATE,
+        early_stopping=True
+    ),
+    "MLPClassifier"
+)
+plot_cm(mlp_cm, "MLP Classifier CM")
 
 metrics_df = pd.DataFrame(all_metrics)
 print("\n\n===== Validation Metrics Summary =====")
